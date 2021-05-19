@@ -26,7 +26,7 @@ public class TowerManagerScript : Loader<TowerManagerScript>
         {
             Vector2 mousePoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(mousePoint, Vector2.zero);
-            if (hit.collider != null && hit.collider.tag == "towerSite" && GameManager.Instance.TotalMoney >= towerButtonPressed.TowerPrice) // подумать тут 
+            if (hit.collider != null && hit.collider.tag == "towerSite" && GameManager.Instance.TotalMoney >= towerButtonPressed.TowerPrice) 
             {
                 buildTile = hit.collider;
                 buildTile.tag = "TowerSideFull";
@@ -69,7 +69,7 @@ public class TowerManagerScript : Loader<TowerManagerScript>
     }
     public void PlaceTower(RaycastHit2D hit)
     {
-        if (!EventSystem.current.IsPointerOverGameObject() && towerButtonPressed != null) // Не можем поставить что-либо
+        if (!EventSystem.current.IsPointerOverGameObject() && towerButtonPressed != null) 
         {
             TowerControll newTower = Instantiate(towerButtonPressed.TowerObject);
             newTower.transform.position = hit.transform.position;
