@@ -47,6 +47,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -94,7 +95,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4400ad9707cf72047a396838c6ca8f56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBetweenAttack: 0.5
+  timeBetweenAttack: 1
   attackRadius: 3
-  projectTile: {fileID: 8732051077237075887, guid: dc0b6215997e6e14aa7ed11f4532547c,
-    type: 3}
+  projectTile: {fileID: 8732051077237075887, guid: dc0b6215997e6e14aa7ed11f4532547c, type: 3}

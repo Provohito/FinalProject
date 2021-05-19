@@ -49,7 +49,6 @@ public class TowerControll : MonoBehaviour
     public void Attack()
     {
         isAttacking = false;
-        Debug.Log("!");
 
         ProjectTile newProjectTile = Instantiate(projectTile) as ProjectTile;
 
@@ -69,16 +68,20 @@ public class TowerControll : MonoBehaviour
 
         if (targetEnemy == null)
         {
-            Debug.Log("Destroy");
             Destroy(newProjectTile);
         }
         else
         {
-            Debug.Log("Shoot");
             StartCoroutine(MoveProjectTile(newProjectTile)); // непосредственно сама стрельба(перемещение префаба)
+            StartCoroutine(DefaultDestroy(newProjectTile)); // Тут я остановился !
         }
     }
 
+    IEnumerator DefaultDestroy(ProjectTile projectTile1)
+    {
+        yield return new WaitForSeconds(3f);
+        Destroy(projectTile1);
+    }
     IEnumerator MoveProjectTile(ProjectTile projectTile)
     {
         while(GetTargetDistance(targetEnemy) < attackRadius && projectTile != null && targetEnemy != null) // 
@@ -89,11 +92,11 @@ public class TowerControll : MonoBehaviour
             projectTile.transform.localPosition = Vector2.MoveTowards(projectTile.transform.localPosition, targetEnemy.transform.localPosition, 5f* Time.deltaTime); // Поворачиваем и выпускаем наш снаряд
             yield return null;
         }
-
         if (projectTile != null || targetEnemy == null)
         {
             Destroy(projectTile);
         }
+        
     }
 
     private float GetTargetDistance(Enemy thisEnemy)
