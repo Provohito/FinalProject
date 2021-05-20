@@ -32,8 +32,9 @@ public class TowerControll : MonoBehaviour
         {
             if (attackCounter <= 0)
             {
-                isAttacking = true;
-
+                isAttacking = true;  // Установка флага, что стрельба разрешена
+                Debug.Log("1");
+                Attack();
                 attackCounter = timeBetweenAttack;
             }
             else
@@ -45,15 +46,6 @@ public class TowerControll : MonoBehaviour
             }
         }
     }
-
-    public void FixedUpdate()
-    {
-        if (isAttacking == true)
-        {
-            Attack();
-        }
-    }
-
     public void Attack()
     {
         isAttacking = false;
@@ -68,12 +60,10 @@ public class TowerControll : MonoBehaviour
         else if(newProjectTile.PType == projectTileType.fireball)
         {
             GameManager.Instance.AudioSource.PlayOneShot(SoundManager.Instance.FireBall);
-
         }
         else if (newProjectTile.PType == projectTileType.rock)
         {
             GameManager.Instance.AudioSource.PlayOneShot(SoundManager.Instance.Rock);
-
         }
 
         if (targetEnemy == null)
@@ -82,25 +72,31 @@ public class TowerControll : MonoBehaviour
         }
         else
         {
-            StartCoroutine(MoveProjectTile(newProjectTile));
+            StartCoroutine(MoveProjectTile(newProjectTile)); // непосредственно сама стрельба(перемещение префаба)
+            StartCoroutine(DefaultDestroy(newProjectTile)); // Тут я остановился !
         }
     }
 
-    IEnumerator MoveProjectTile(ProjectTile projecttile)
+    IEnumerator DefaultDestroy(ProjectTile projectTile1)
     {
-        while(GetTargetDistance(targetEnemy) > 0.20f && projecttile != null && targetEnemy != null)
+        yield return new WaitForSeconds(3f);
+        Destroy(projectTile1);
+    }
+    IEnumerator MoveProjectTile(ProjectTile projectTile)
+    {
+        while(GetTargetDistance(targetEnemy) < attackRadius && projectTile != null && targetEnemy != null) // 
         {
             var dir = targetEnemy.transform.localPosition - transform.localPosition;
             var angleDirection = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-            projecttile.transform.rotation = Quaternion.AngleAxis(angleDirection, Vector3.forward);
-            projecttile.transform.localPosition = Vector2.MoveTowards(projecttile.transform.localPosition, targetEnemy.transform.localPosition, 5f* Time.deltaTime);
+            projectTile.transform.rotation = Quaternion.AngleAxis(angleDirection, Vector3.forward);
+            projectTile.transform.localPosition = Vector2.MoveTowards(projectTile.transform.localPosition, targetEnemy.transform.localPosition, 5f* Time.deltaTime); // Поворачиваем и выпускаем наш снаряд
             yield return null;
         }
-
-        if (projecttile != null || targetEnemy == null)
+        if (projectTile != null || targetEnemy == null)
         {
-            Destroy(projecttile);
+            Destroy(projectTile);
         }
+        
     }
 
     private float GetTargetDistance(Enemy thisEnemy)
