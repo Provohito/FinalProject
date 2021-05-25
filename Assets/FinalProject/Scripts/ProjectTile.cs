@@ -2,7 +2,7 @@
 
 public enum projectTileType
 {
-    rock, arrow, fireball
+    rock, arrow, fireball, mace, rock1, rrock, fireball1, thorns
 };
 
 public class ProjectTile : MonoBehaviour

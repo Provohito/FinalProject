@@ -16,7 +16,7 @@ public class TowerControll : MonoBehaviour
 
     
 
-    bool isAttacking = false;
+    bool isAttacking = true;
     void Update()
     {
         attackCounter -= Time.deltaTime;
@@ -26,29 +26,22 @@ public class TowerControll : MonoBehaviour
             if (nearestEnemy != null && Vector2.Distance(transform.localPosition, nearestEnemy.transform.localPosition) <= attackRadius)
             {
                 targetEnemy = nearestEnemy;
+                isAttacking = true;
             }
         }
         else
         {
-            if (attackCounter <= 0)
-            {
-                isAttacking = true;  // Установка флага, что стрельба разрешена
-                Debug.Log("1");
+            if (attackCounter <= 0 && isAttacking)
+            { 
                 Attack();
                 attackCounter = timeBetweenAttack;
             }
-            else
-                isAttacking = false;
 
-            if (Vector2.Distance(transform.localPosition, targetEnemy.transform.localPosition) > attackRadius)
-            {
-                targetEnemy = null;
-            }
+            
         }
     }
     public void Attack()
     {
-        isAttacking = false;
 
         ProjectTile newProjectTile = Instantiate(projectTile) as ProjectTile;
 
@@ -66,25 +59,19 @@ public class TowerControll : MonoBehaviour
             GameManager.Instance.AudioSource.PlayOneShot(SoundManager.Instance.Rock);
         }
 
-        if (targetEnemy == null)
+        if (Vector2.Distance(transform.localPosition, targetEnemy.transform.localPosition) > attackRadius)
         {
-            Destroy(newProjectTile);
+            Destroy(newProjectTile.gameObject);
+            isAttacking = false;
+            return;
         }
-        else
-        {
-            StartCoroutine(MoveProjectTile(newProjectTile)); // непосредственно сама стрельба(перемещение префаба)
-            StartCoroutine(DefaultDestroy(newProjectTile)); // Тут я остановился !
-        }
+        StartCoroutine(MoveProjectTile(newProjectTile)); // непосредственно сама стрельба(перемещение префаба)
+        
     }
 
-    IEnumerator DefaultDestroy(ProjectTile projectTile1)
-    {
-        yield return new WaitForSeconds(3f);
-        Destroy(projectTile1);
-    }
     IEnumerator MoveProjectTile(ProjectTile projectTile)
     {
-        while(GetTargetDistance(targetEnemy) < attackRadius && projectTile != null && targetEnemy != null) // 
+        while( projectTile != null && targetEnemy != null) // 
         {
             var dir = targetEnemy.transform.localPosition - transform.localPosition;
             var angleDirection = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
@@ -92,11 +79,6 @@ public class TowerControll : MonoBehaviour
             projectTile.transform.localPosition = Vector2.MoveTowards(projectTile.transform.localPosition, targetEnemy.transform.localPosition, 5f* Time.deltaTime); // Поворачиваем и выпускаем наш снаряд
             yield return null;
         }
-        if (projectTile != null || targetEnemy == null)
-        {
-            Destroy(projectTile);
-        }
-        
     }
 
     private float GetTargetDistance(Enemy thisEnemy)

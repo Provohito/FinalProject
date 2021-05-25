@@ -34,6 +34,9 @@ public class GameManager : Loader<GameManager>
     [SerializeField]
     int enemiesPerSpawn;
 
+    [SerializeField]
+    GameObject towersBtns;
+
     int waveNumber = 0;
     int totalMoney;
     int totalEscaped = 0;
@@ -247,6 +250,14 @@ public class GameManager : Loader<GameManager>
         
     }
 
+    public void ShowTowers()
+    {
+        if (towersBtns.activeSelf == true)
+            towersBtns.SetActive(false);
+        else
+            towersBtns.SetActive(true);
+    }
+
     public void ShowMenu()
     {
         switch(currentState)
@@ -282,6 +293,6 @@ public class GameManager : Loader<GameManager>
 
     private void Awake()
     {
-        DontDestroyOnLoad(this.gameObject);
+        DontDestroyOnLoad(this.gameObject); // подумать наж этим
     }
 }
