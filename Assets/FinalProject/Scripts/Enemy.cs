@@ -1,13 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
 
     
-    [SerializeField]
     Transform exit;
-    [SerializeField]
-    Transform[] wayPoints;
+    List<Transform> wayPoints = new List<Transform>(); 
     [SerializeField]
     float navigation;
     [SerializeField]
@@ -32,6 +31,12 @@ public class Enemy : MonoBehaviour
     }
     void Start()
     {
+        GameObject[] countMoving = GameObject.FindGameObjectsWithTag("MovingPoint");
+        exit = GameObject.FindGameObjectWithTag("Finish").transform;
+        for (int i = 0; i < countMoving.Length; i++)
+        {
+            wayPoints.Add(countMoving[i].transform);
+        }
         enemy = GetComponent<Transform>();
         GameManager.Instance.RegisterEnemy(this);
         anim = GetComponent<Animator>();
@@ -46,7 +51,7 @@ public class Enemy : MonoBehaviour
             navigationTime += Time.deltaTime;
             if (navigationTime > navigation)
             {
-                if (target < wayPoints.Length)
+                if (target < wayPoints.Count)
                 {
                     enemy.position = Vector2.MoveTowards(enemy.position, wayPoints[target].position, navigationTime);
                 }

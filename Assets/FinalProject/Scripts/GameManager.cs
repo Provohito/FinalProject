@@ -25,7 +25,6 @@ public class GameManager : Loader<GameManager>
     Button playBtn;
 
 
-    [SerializeField]
     GameObject spawnPoint;
     [SerializeField]
     Enemy[] enemies;
@@ -109,6 +108,7 @@ public class GameManager : Loader<GameManager>
     const float spawnDelay = 0.5f;
     void Start()
     {
+        spawnPoint = GameObject.FindGameObjectWithTag("Respawn");
         playBtn.gameObject.SetActive(false);
         audioSource = GetComponent<AudioSource>();
         ShowMenu();
@@ -293,6 +293,6 @@ public class GameManager : Loader<GameManager>
 
     private void Awake()
     {
-        DontDestroyOnLoad(this.gameObject); // подумать наж этим
+        //DontDestroyOnLoad(this.gameObject); // подумать наж этим
     }
 }
