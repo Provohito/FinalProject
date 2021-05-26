@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 2238568035926866475}
   - component: {fileID: 8041756650478933865}
-  - component: {fileID: 1263459040155017973}
   - component: {fileID: 3742305426956868158}
+  - component: {fileID: 1263459040155017973}
   m_Layer: 0
   m_Name: Fireball1
-  m_TagString: Untagged
+  m_TagString: ProjectTile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -84,20 +84,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1263459040155017973
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4944988868834944780}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f88d44911130d6469141f45c258f731, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackDamage: 0
-  pType: 6
 --- !u!61 &3742305426956868158
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -124,3 +110,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.31, y: 0.262}
   m_EdgeRadius: 0
+--- !u!114 &1263459040155017973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4944988868834944780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f88d44911130d6469141f45c258f731, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDamage: 5
+  pType: 6
