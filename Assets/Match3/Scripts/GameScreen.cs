@@ -37,7 +37,7 @@ namespace Match3
 
             RefreshInfo();
 
-            tileGrid.Generate(new Vector2(7, 7));
+            tileGrid.Generate();
         }
 
         public void MakeStep()
